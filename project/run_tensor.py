@@ -2,6 +2,9 @@
 Be sure you have minitorch installed in you Virtual Env.
 >>> pip install -Ue .
 """
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import minitorch
 
@@ -96,8 +99,19 @@ class TensorTrain:
 
 
 if __name__ == "__main__":
+    import time
+
     PTS = 50
-    HIDDEN = 2
+    HIDDEN = 6
     RATE = 0.5
-    data = minitorch.datasets["Simple"](PTS)
-    TensorTrain(HIDDEN).train(data, RATE)
+
+    for dataset_name in ["Simple", "Diag", "Split", "Xor"]:
+        print(f"\n=== Dataset: {dataset_name} | Hidden: {HIDDEN} | LR: {RATE} | PTS: {PTS} ===")
+        data = minitorch.datasets[dataset_name](PTS)
+        start = time.time()
+
+        def log_fn(epoch, total_loss, correct, losses, _start=start):
+            tpe = (time.time() - _start) / epoch
+            print(f"Epoch {epoch} loss {total_loss:.4f} correct {correct} | time/epoch: {tpe:.3f}s")
+
+        TensorTrain(HIDDEN).train(data, RATE, log_fn=log_fn)

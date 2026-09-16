@@ -1,4 +1,9 @@
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
 import random
+import time
 
 import numba
 
@@ -122,13 +127,24 @@ if __name__ == "__main__":
     if args.DATASET == "xor":
         data = minitorch.datasets["Xor"](PTS)
     elif args.DATASET == "simple":
-        data = minitorch.datasets["Simple"].simple(PTS)
+        data = minitorch.datasets["Simple"](PTS)
     elif args.DATASET == "split":
         data = minitorch.datasets["Split"](PTS)
+    elif args.DATASET == "diag":
+        data = minitorch.datasets["Diag"](PTS)
 
     HIDDEN = int(args.HIDDEN)
     RATE = args.RATE
 
+    start = time.time()
+    epoch_count = [0]
+
+    def timed_log(epoch, total_loss, correct, losses):
+        epoch_count[0] = epoch + 1
+        elapsed = time.time() - start
+        tpe = elapsed / (epoch + 1)
+        print(f"Epoch {epoch} loss {total_loss:.4f} correct {correct} | time/epoch: {tpe:.3f}s")
+
     FastTrain(
         HIDDEN, backend=FastTensorBackend if args.BACKEND != "gpu" else GPUBackend
-    ).train(data, RATE)
+    ).train(data, RATE, log_fn=timed_log)
