@@ -533,3 +533,84 @@ Epoch 490 loss 0.1917 correct 50 | time/epoch: 0.257s
 ```
 
 **Final accuracy: 50/50 | Time per epoch (steady state): ~0.10–0.26s**
+
+## Module: efficiency improvements
+split CPU
+```
+Epoch 0 loss 10.8494 correct 24 | time/epoch: 16.544s
+Epoch 10 loss 5.0189 correct 39 | time/epoch: 1.545s
+Epoch 20 loss 4.7063 correct 39 | time/epoch: 0.831s
+Epoch 30 loss 3.2310 correct 47 | time/epoch: 0.577s
+Epoch 40 loss 2.3425 correct 41 | time/epoch: 0.448s
+Epoch 50 loss 1.9086 correct 47 | time/epoch: 0.369s
+Epoch 60 loss 2.8549 correct 45 | time/epoch: 0.317s
+Epoch 70 loss 3.0672 correct 47 | time/epoch: 0.279s
+Epoch 80 loss 2.3334 correct 48 | time/epoch: 0.251s
+Epoch 90 loss 1.4674 correct 49 | time/epoch: 0.228s
+```
+split GPU
+```
+Epoch 0 loss 4.0697 correct 32 | time/epoch: 4.679s
+Epoch 10 loss 1.2674 correct 45 | time/epoch: 1.412s
+Epoch 20 loss 1.3202 correct 48 | time/epoch: 1.259s
+Epoch 30 loss 2.1764 correct 48 | time/epoch: 1.198s
+Epoch 40 loss 0.8667 correct 47 | time/epoch: 1.171s
+Epoch 50 loss 0.6491 correct 47 | time/epoch: 1.156s
+Epoch 60 loss 1.2700 correct 47 | time/epoch: 1.146s
+Epoch 70 loss 1.2908 correct 48 | time/epoch: 1.139s
+Epoch 80 loss 1.7609 correct 50 | time/epoch: 1.133s
+Epoch 90 loss 1.5403 correct 49 | time/epoch: 1.128s
+```
+simple CPU
+```
+Epoch 0 loss 5.3701 correct 47 | time/epoch: 17.060s
+Epoch 10 loss 1.9338 correct 49 | time/epoch: 1.590s
+Epoch 20 loss 1.3272 correct 50 | time/epoch: 0.853s
+Epoch 30 loss 1.1075 correct 50 | time/epoch: 0.592s
+Epoch 40 loss 0.2916 correct 50 | time/epoch: 0.458s
+Epoch 50 loss 1.4751 correct 50 | time/epoch: 0.377s
+Epoch 60 loss 0.9379 correct 50 | time/epoch: 0.324s
+Epoch 70 loss 0.2184 correct 50 | time/epoch: 0.285s
+Epoch 80 loss 0.7878 correct 50 | time/epoch: 0.255s
+Epoch 90 loss 0.0670 correct 50 | time/epoch: 0.232s
+```
+simple gpu
+```
+Epoch 0 loss 4.2661 correct 35 | time/epoch: 4.427s
+Epoch 10 loss 1.8761 correct 46 | time/epoch: 1.413s
+Epoch 20 loss 0.7985 correct 48 | time/epoch: 1.266s
+Epoch 30 loss 1.5497 correct 48 | time/epoch: 1.215s
+Epoch 40 loss 1.0456 correct 49 | time/epoch: 1.184s
+Epoch 50 loss 1.3589 correct 49 | time/epoch: 1.167s
+Epoch 60 loss 0.5867 correct 50 | time/epoch: 1.155s
+Epoch 70 loss 0.6536 correct 49 | time/epoch: 1.146s
+Epoch 80 loss 0.7096 correct 49 | time/epoch: 1.138s
+Epoch 90 loss 0.7368 correct 50 | time/epoch: 1.136s
+```
+diag gpu
+```
+Epoch 0 loss 0.8436 correct 45 | time/epoch: 4.515s
+Epoch 10 loss 1.0098 correct 48 | time/epoch: 1.415s
+Epoch 20 loss 1.1438 correct 48 | time/epoch: 1.271s
+Epoch 30 loss 1.2240 correct 49 | time/epoch: 1.220s
+Epoch 40 loss 0.8638 correct 49 | time/epoch: 1.195s
+Epoch 50 loss 1.3472 correct 50 | time/epoch: 1.180s
+Epoch 60 loss 0.9327 correct 49 | time/epoch: 1.171s
+Epoch 70 loss 0.9471 correct 50 | time/epoch: 1.164s
+Epoch 80 loss 0.0018 correct 50 | time/epoch: 1.157s
+Epoch 90 loss 0.7831 correct 49 | time/epoch: 1.152s
+```
+diag cpu
+```
+Epoch 0 loss 0.7511 correct 47 | time/epoch: 16.551s
+Epoch 10 loss 0.3240 correct 47 | time/epoch: 1.546s
+Epoch 20 loss 0.3007 correct 49 | time/epoch: 0.831s
+Epoch 30 loss 0.2443 correct 49 | time/epoch: 0.578s
+Epoch 40 loss 0.4402 correct 50 | time/epoch: 0.447s
+Epoch 50 loss 0.0322 correct 50 | time/epoch: 0.368s
+Epoch 60 loss 0.1925 correct 50 | time/epoch: 0.316s
+Epoch 70 loss 0.1621 correct 50 | time/epoch: 0.278s
+Epoch 80 loss 0.1651 correct 50 | time/epoch: 0.249s
+Epoch 90 loss 0.1580 correct 50 | time/epoch: 0.226s
+```
+Note that the GPU is slower here because the model is too small: the overhead of launching each GPU operation outweighs the actual computation

@@ -119,6 +119,7 @@ if __name__ == "__main__":
     parser.add_argument("--BACKEND", default="cpu", help="backend mode")
     parser.add_argument("--DATASET", default="simple", help="dataset")
     parser.add_argument("--PLOT", default=False, help="dataset")
+    parser.add_argument("--EPOCHS", type=int, default=500, help="number of epochs")
 
     args = parser.parse_args()
 
@@ -147,4 +148,4 @@ if __name__ == "__main__":
 
     FastTrain(
         HIDDEN, backend=FastTensorBackend if args.BACKEND != "gpu" else GPUBackend
-    ).train(data, RATE, log_fn=timed_log)
+    ).train(data, RATE, max_epochs=args.EPOCHS, log_fn=timed_log)
